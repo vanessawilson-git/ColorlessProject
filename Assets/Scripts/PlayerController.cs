@@ -31,49 +31,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
 
-        if (KnockBackCounter <= 0)
-        {
-
-            controller.minMoveDistance = 0;
-            anim.SetBool("isGrounded", controller.isGrounded);
-            anim.SetFloat("Speed", (Mathf.Abs(Input.GetAxisRaw("Vertical")) + Mathf.Abs(Input.GetAxisRaw("Horizontal"))));
-
-
-            //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
-
-
-            float yStore = moveDirection.y;
-
-
-            moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) +
-                            (transform.right * Input.GetAxisRaw("Horizontal"));
-            moveDirection = moveDirection.normalized * moveSpeed;
-            moveDirection.y = yStore;
-
-            if (controller.isGrounded == true)
-            {
-                moveDirection.y = 0f;
-                if (Input.GetButtonDown("Jump"))
-                {
-
-                    moveDirection.y = jumpForce;
-
-                }
-
-            }
-
-
-        }
-        else
-        {
-            KnockBackCounter -= Time.deltaTime;
-        }
-
-
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
-        controller.Move(moveDirection * Time.deltaTime);
+        ControlMovementPLayer();
 
         //Move the Player in different directions based on cameraDirection
 
@@ -91,8 +50,68 @@ public class PlayerController : MonoBehaviour
         KnockBackCounter = knockBackTime;
         moveDirection = direction * knockBackForce;
         moveDirection.y = knockBackForce;
+     }
+
+
+    void ControlMovementPLayer() {
+
+        if (KnockBackCounter <= 0)
+        {
+            CheckInputForRunning();
+
+
+            CheckForJumping();
+
+
+        }
+        else
+        {
+            KnockBackCounter -= Time.deltaTime;
+        }
+
+
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+        controller.Move(moveDirection * Time.deltaTime);
+
+
     }
 
+
+    void CheckInputForRunning() {
+        controller.minMoveDistance = 0;
+        anim.SetBool("isGrounded", controller.isGrounded);
+        anim.SetFloat("Speed", (Mathf.Abs(Input.GetAxisRaw("Vertical")) + Mathf.Abs(Input.GetAxisRaw("Horizontal"))));
+
+
+        //moveDirection = new Vector3(Input.GetAxis("Horizontal") * moveSpeed, moveDirection.y, Input.GetAxis("Vertical") * moveSpeed);
+
+
+        float yStore = moveDirection.y;
+
+
+        moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) +
+                        (transform.right * Input.GetAxisRaw("Horizontal"));
+        moveDirection = moveDirection.normalized * moveSpeed;
+        moveDirection.y = yStore;
+
+
+    }
+
+
+    void CheckForJumping() {
+        if (controller.isGrounded == true)
+        {
+            moveDirection.y = 0f;
+            if (Input.GetButtonDown("Jump"))
+            {
+
+                moveDirection.y = jumpForce;
+
+            }
+
+        }
+
+    }
 
 
 }

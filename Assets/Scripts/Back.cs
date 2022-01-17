@@ -16,19 +16,26 @@ public class Back : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
 
 
-        if (gm.currentTokens == 8)
-        {
-            SceneManager.LoadScene("End", 0);
-        }
-        else {
+        DetermineBackButtonState();
 
-            SceneManager.LoadScene("Menu", 0);
-        }
-        
+
     }
 
     public void Continue()
     {
         SceneManager.LoadScene("Bedroom", 0);
+    }
+
+
+    void DetermineBackButtonState() {
+        if (gm.currentTokens == 8)
+        {
+            SceneManager.LoadScene("End", 0);
+        }
+        else
+        {
+
+            SceneManager.LoadScene("Menu", 0);
+        }
     }
 }

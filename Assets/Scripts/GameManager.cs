@@ -28,7 +28,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentTokens == 8) {
+        RenderBluethingsOnTokenComplete();
+    }
+
+    public void AddGold(int tokensToAdd)
+    {
+        currentTokens += tokensToAdd;
+        tokenText.text = "Tokens: " + currentTokens + "/8";
+    }
+
+
+    void RenderBluethingsOnTokenComplete() {
+        if (currentTokens == 8)
+        {
 
             bed.GetComponent<Renderer>().material = bedM;
             bass.GetComponent<Renderer>().material = bassM;
@@ -36,11 +48,5 @@ public class GameManager : MonoBehaviour
             flowers.GetComponent<Renderer>().material = flowersM;
 
         }
-    }
-
-    public void AddGold(int tokensToAdd)
-    {
-        currentTokens += tokensToAdd;
-        tokenText.text = "Tokens: " + currentTokens + "/8";
     }
 }

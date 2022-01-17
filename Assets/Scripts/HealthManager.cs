@@ -30,22 +30,7 @@ public class HealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (invinsibilityCounter > 0)
-        {
-            invinsibilityCounter -= Time.deltaTime;
-
-            flashCounter -= Time.deltaTime;
-            if (flashCounter <= 0)
-            {
-                playerRenderer.enabled = !playerRenderer.enabled;
-                flashCounter = flashLenght;
-            }
-
-            if (invinsibilityCounter <= 0)
-            {
-                playerRenderer.enabled = true;
-            }
-        }
+        ReduceInvincibilityCounter();
     }
 
 
@@ -109,6 +94,42 @@ public class HealthManager : MonoBehaviour
         flashCounter = flashLenght;
 
      }
+
+
+    void ReduceInvincibilityCounter() {
+        if (invinsibilityCounter > 0)
+        {
+            invinsibilityCounter -= Time.deltaTime;
+
+
+            FlashWhileInsvincible();
+        }
+
+
+    }
+
+
+    void FlashWhileInsvincible() { 
+    
+            flashCounter -= Time.deltaTime;
+            if (flashCounter <= 0)
+            {
+                playerRenderer.enabled = !playerRenderer.enabled;
+                flashCounter = flashLenght;
+            }
+
+        EnsurePlayerStaysVisile();
+
+
+    }
+
+
+    void EnsurePlayerStaysVisile() {
+        if (invinsibilityCounter <= 0)
+        {
+            playerRenderer.enabled = true;
+        }
+    }
 
 
 
